@@ -11,6 +11,7 @@ function expandPath(dir) {
 }
 
 async function doCleanup() {
+    console.log("Starting cleanup")
     for (const dir of dirs) {
         const expandedDir = expandPath(dir);
         try {
@@ -27,6 +28,8 @@ async function doCleanup() {
     }
 }
 
-cron.schedule(" 0 0 1 * *", doCleanup(), {
+cron.schedule(" 0 0 1 * *", doCleanup, {
     scheduled: true
 });
+
+console.log('Cron job scheduled.');
