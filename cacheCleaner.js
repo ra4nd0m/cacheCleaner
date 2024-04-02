@@ -15,7 +15,12 @@ async function doCleanup() {
         const expandedDir = expandPath(dir);
         try {
             const files = await fs.promises.readdir(expandedDir);
-            await Promise.all(files.map(file => fs.promises.unlink(path.join(expandedDir, file))));
+            await Promise.all(files.map(async file => {
+                console.log(`Deleting file: ${path.join(expandedDir, file)}`);
+                await fs.promises.unlink(path.join(expandedDir, file));
+                console.log(`Successfully deleted file: ${path.join(expandedDir, file)}`);
+            }));
+            console.log(`Successfully cleaned up directory: ${expandedDir}`);
         } catch (err) {
             console.error(`Error cleaning up directory ${expandedDir}:`, err);
         }
